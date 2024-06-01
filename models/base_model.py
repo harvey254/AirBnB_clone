@@ -16,24 +16,24 @@ class BaseModel:
         *args: list of arguments
         **kwargs: dictionary of arguments
         """
-    if kwargs:
-        datetime_fmt = '%Y-%m-%dT%H:%M:%S.%f'
-        for key, value in kwargs.items():
-            if key == '__class__':
-                continue
-            elif key == 'created_at':
-                self.created_at = datetime.strptime(kwargs['created_at'],
+        if kwargs:
+            datetime_fmt = '%Y-%m-%dT%H:%M:%S.%f'
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                elif key == 'created_at':
+                    self.created_at = datetime.strptime(kwargs['created_at'],
                                                     datetime_fmt)
-            elif key == 'updated_at':
-                self.updated_at = datetime.strptime(kwargs['updated_at'],
+                elif key == 'updated_at':
+                    self.updated_at = datetime.strptime(kwargs['updated_at'],
                                                     datetime_fmt)
-            else:
-                setattr(self, key, value)
-    else:
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        models.storage.new(self)
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def to_dict(self):
         """Returns a dictionary that contains all values of the instance"""

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    file storage
+    file storage module
 """
 import json
 import os.path as path
