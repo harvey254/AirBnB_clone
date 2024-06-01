@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """An interactive command interpreter for HBNB."""
 
 import cmd
@@ -27,6 +26,8 @@ class_registry = {
 
 
 class HBNBCommand(cmd.Cmd):
+    """ HBNB class odule """
+
     prompt = '(hbnb) '
 
     def do_EOF(self, line):
@@ -94,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-        """Displays all instances of a class or all instances if no class is specified"""
+        """Displays all instances"""
         objects = []
         if not line:
             objects = [str(obj) for obj in storage.all().values()]
@@ -102,7 +103,8 @@ class HBNBCommand(cmd.Cmd):
             if line not in class_registry:
                 print("** class doesn't exist **")
                 return
-            objects = [str(obj) for obj in storage.all().values() if obj.__class__.__name__ == line]
+            objects = [str(obj) for obj in storage.all().values()
+                       if obj.__class__.__name__ == line]
         print(objects)
 
     def do_update(self, line):
@@ -135,11 +137,14 @@ class HBNBCommand(cmd.Cmd):
         if line not in class_registry:
             print("** class doesn't exist **")
             return
-        count = sum(1 for obj in storage.all().values() if obj.__class__.__name__ == line)
+        count = sum(1 for obj in storage.all().values()
+                    if obj.__class__.__name__ == line)
         print(count)
 
     def default(self, line):
-        """Handles unknown commands by interpreting them as <class>.<method>(<args>)"""
+        """Handles unknown commands by
+        interpreting them as <class>.<method>(<args>)
+        """
         if not line:
             return
 
@@ -161,9 +166,11 @@ class HBNBCommand(cmd.Cmd):
             return self.do_destroy(f"{class_name} {args[0]}")
         if method_name == 'update':
             if len(args) == 3:
-                return self.do_update(f"{class_name} {args[0]} {args[1]} {args[2]}")
+                return self.do_update(f"{class_name}
+                                      {args[0]} {args[1]} {args[2]}")
             if len(args) == 2:
                 return self.do_update(f"{class_name} {args[0]} {args[1]}")
 
+
 if __name__ == '__main__':
-    HBNBCommand().cmdloop(
+    HBNBCommand().cmdloop()
