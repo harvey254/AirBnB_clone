@@ -32,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """Handles EOF to exit the command interpreter"""
-        print()
+        print("")
         return True
 
     def do_quit(self, line):
@@ -166,8 +166,7 @@ class HBNBCommand(cmd.Cmd):
             return self.do_destroy(f"{class_name} {args[0]}")
         if method_name == 'update':
             if len(args) == 3:
-                return self.do_update(f"{class_name}
-                                      {args[0]} {args[1]} {args[2]}")
+                return self.do_update(f"{class_name}{args[0]} {args[1]} {args[2]}")
             if len(args) == 2:
                 return self.do_update(f"{class_name} {args[0]} {args[1]}")
 
