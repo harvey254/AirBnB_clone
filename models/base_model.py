@@ -8,6 +8,7 @@ import uuid
 
 class BaseModel:
     """ Base class for all models """
+
     def __init__(self, *args, **kwargs):
         """ Constructor class
          Attributes
@@ -15,19 +16,19 @@ class BaseModel:
         *args: list of arguments
         **kwargs: dictionary of arguments
         """
-    if (kwargs):
+    if kwargs:
+        datetime_fmt = '%Y-%m-%dT%H:%M:%S.%f'
         for key, value in kwargs.items():
-            if key == 'id':
-                self.id = value
+            if key == '__class__':
+                continue
             elif key == 'created_at':
-                self.created_at = datetime.strptime(value,
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
+                self.created_at = datetime.strptime(kwargs['created_at'],
+                                                    datetime_fmt)
             elif key == 'updated_at':
-                self.updated_at = datetime.strptime(value,
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
+                self.updated_at = datetime.strptime(kwargs['updated_at'],
+                                                    datetime_fmt)
             else:
-                if (key != '__class__'):
-                    setattr(self, key, value)
+                setattr(self, key, value)
     else:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
